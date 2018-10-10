@@ -1,8 +1,10 @@
 # load_libraries ------------------------------------------
-
+rm(list = ls())
 library(plotly)
+library(gmp)
 library(caret)
 library(sna)
+library(pryr)
 library(speedglm)
 library(tidyquant)
 library(tsibble)
@@ -17,15 +19,6 @@ data(coleman)
 
 coleman %>%
     summary()
-
-babynames::babynames %>% 
-    lm(data = .,name~year+sex+n+prop) %>% 
-    microbenchmark::microbenchmark(times = 100)
-
-babynames::babynames %>% 
-    lm(data = .,name~year+sex+n+prop) %>% 
-    microbenchmark::microbenchmark(times = 100)
-
 
 
 df <-diamonds %>%
@@ -43,4 +36,5 @@ df <-diamonds %>%
                  ,aes(cut,clarity,fill=price))+
             geom_tile())
         ))
-    )
+    ) 
+df
