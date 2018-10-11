@@ -1,0 +1,27 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#Visualization
+#Statistics
+
+```{r}
+library(data.table)
+library(tidyverse)
+library(plotly)
+library(ggplot2)
+library(plotly)
+
+p<-ggplot(data = diamonds,aes(x,price,color=cut))+
+    # geom_bar(data = diamonds,stat = "identity",aes(cut,price))+
+    geom_point(alpha=I(.16))+
+    geom_smooth(method = "lm",alpha=I(.02))
+
+```
+
+
+ggplot()
+geom()
+aes()
+
