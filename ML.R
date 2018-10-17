@@ -21,6 +21,7 @@ coleman %>%
     summary()
 
 
+
 df <-diamonds %>%
     group_by(color) %>%
     nest() %>%
@@ -36,5 +37,12 @@ df <-diamonds %>%
                  ,aes(cut,clarity,fill=price))+
             geom_tile())
         ))
-    ) 
-df
+    ) %>% 
+    mutate(discription =
+               map(data,
+                   ~(DescTools::Desc(.x$depth))))
+
+df$discription
+
+DescTools::Desc(iris$Sepal.Length,plotit=F)
+
