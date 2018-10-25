@@ -1,17 +1,22 @@
 # load_libraries ------------------------------------------
 rm(list = ls())
-library(plotly)
-library(gmp)
-library(caret)
-library(sna)
-library(pryr)
-library(speedglm)
-library(tidyquant)
-library(tsibble)
-library(tidyverse)
-library(data.table)
-library(broom)
-library(TSstudio)
+pacman::p_load(plotly,
+               pacman,
+            colorfindr,               
+            gmp,
+            infer,
+            caret,
+            sna,
+            pryr,
+            speedglm,
+            tidyquant,
+            tsibble,
+            tidyverse,
+            data.table,
+            broom,
+            TSstudio,
+            rqdatatable,
+            proto)
 
 # SEMMA ---------------------------------------------------
 
@@ -21,8 +26,7 @@ coleman %>%
     summary()
 
 
-
-df <-diamonds %>%
+df <- diamonds %>%
     group_by(color) %>%
     nest() %>%
     mutate(model = map(data,
@@ -30,19 +34,16 @@ df <-diamonds %>%
                            carat ~ cut + depth, data = .x
                        )))) %>%
     mutate(rsquare = map_dbl(model,
-                             'r.squared')) %>% 
-    mutate(
-        graph=map(data
-        ,~((ggplot(data = .x
-                 ,aes(cut,clarity,fill=price))+
-            geom_tile())
-        ))
-    ) %>% 
+                             'r.squared')) %>%
+    mutate(graph = map(data
+                       ,  ~ ((
+                           ggplot(data = .x
+                                  , aes(cut, clarity, fill = price))+
+                               geom_tile()
+                       )))) %>%
     mutate(discription =
                map(data,
-                   ~(DescTools::Desc(.x$depth))))
+                   ~ (DescTools::Desc(.x$depth, plotit = F))))
 
-df$discription
-
-DescTools::Desc(iris$Sepal.Length,plotit=F)
+df
 
