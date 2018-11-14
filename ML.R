@@ -1,22 +1,28 @@
 # load_libraries ------------------------------------------
 rm(list = ls())
-pacman::p_load(plotly,
-               pacman,
-            colorfindr,               
-            gmp,
-            infer,
-            caret,
-            sna,
-            pryr,
-            speedglm,
-            tidyquant,
-            tsibble,
-            tidyverse,
-            data.table,
-            broom,
-            TSstudio,
-            rqdatatable,
-            proto)
+pacman::p_load(
+    proto,
+    promises,
+    future,
+    plotly,
+    pacman,
+    colorfindr,
+    gmp,
+    tidyquant,
+    tsibble,
+    infer,
+    caret,
+    sna,
+    pryr,
+    speedglm,
+    broom,
+    TSstudio,
+    rqdatatable,
+    furrr,
+    tidyverse,
+    data.table
+)
+
 
 # SEMMA ---------------------------------------------------
 
@@ -26,7 +32,7 @@ coleman %>%
     summary()
 
 
-df <- diamonds %>%
+dmd_df <- diamonds %>%
     group_by(color) %>%
     nest() %>%
     mutate(model = map(data,
@@ -38,12 +44,15 @@ df <- diamonds %>%
     mutate(graph = map(data
                        ,  ~ ((
                            ggplot(data = .x
-                                  , aes(cut, clarity, fill = price))+
+                                  , aes(cut, clarity, fill = price)) +
                                geom_tile()
                        )))) %>%
     mutate(discription =
                map(data,
                    ~ (DescTools::Desc(.x$depth, plotit = F))))
 
-df
 
+
+
+# market_basket -------------------------------------------
+plan(strategy = multicore)

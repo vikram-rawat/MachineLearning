@@ -1,3 +1,5 @@
+###https://geocompr.robinlovelace.net/index.html
+
 
 # load_libraries ----------------------------------------------------------
 
@@ -13,7 +15,11 @@ pacman::p_load(leaflet
 
 # tmap --------------------------------------------------------------------
 
+
 data("World", "metro", package = "tmap")
+
+ttm()
+
 
 tm_shape(world) +
     tm_polygons(
@@ -24,8 +30,6 @@ tm_shape(world) +
         , border.col = "grey30"
         , id = "name"
     )
-
-ttm()
 
 
 # understand Basic --------------------------------------------------------
